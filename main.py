@@ -4,6 +4,8 @@ from fastapi.openapi.utils import get_openapi
 from models.database import database
 from routers import items_router, users_router, orders_router
 
+
+
 app = FastAPI(debug=True)
 
 app.include_router(items_router.router)

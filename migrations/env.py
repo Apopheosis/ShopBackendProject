@@ -1,10 +1,13 @@
+import os
 from logging.config import fileConfig
-
+import sys
 from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+from sqlalchemy import pool, text
 
 from alembic import context
 from models import database, Item, User, Order
+
+sys.path.append(os.getcwd())
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -72,6 +75,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
+        connection.execute(text("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\""))
         context.configure(
             connection=connection, target_metadata=target_metadata
         )
